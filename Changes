@@ -1,0 +1,6 @@
+Revision history for Perl extension Eixo::Base.
+
+0.01  Tue Mar 25 13:03:19 2014
+	- original version; created by h2xs 1.23 with options
+		-AX Eixo::Base
+
