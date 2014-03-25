@@ -15,7 +15,7 @@ sub concat : Sig(s, ARRAY) {
 
 is(&sum(20, 20), 40, 'Normal call works perfectly');
 
-$@;
+$@ = undef;
 eval{
 	&sum(0.2, {});
 };

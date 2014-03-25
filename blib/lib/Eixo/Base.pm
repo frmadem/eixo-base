@@ -34,28 +34,21 @@ our $VERSION = '0.01';
 __END__
 # Below is stub documentation for your module. You'd better edit it!
 
-=head1 NAME
+=head1 Eixo::Base
 
-Eixo::Base - Perl extension for blah blah blah
+Eixo::Base - Another Perl extension for Classes and Objects
 
 =head1 SYNOPSIS
 
-  use Eixo::Base;
+  use Eixo::Base::Clase;
   blah blah blah
 
 =head1 DESCRIPTION
 
-Stub documentation for Eixo::Base, created by h2xs. It looks like the
-author of the extension was negligent enough to leave the stub
-unedited.
-
-Blah blah blah.
 
 =head2 EXPORT
 
 None by default.
-
-
 
 =head1 SEE ALSO
 
