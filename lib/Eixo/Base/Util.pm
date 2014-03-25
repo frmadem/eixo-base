@@ -16,6 +16,9 @@ my $EQUIVALENCES = {
 	b => 'boolean'
 };
 
+#
+# Signature of the subroutine
+#
 sub UNIVERSAL::Sig :ATTR(CODE){
 
 	my ($pkg, $sym, $code, $attr_name, $data) = @_;
@@ -113,7 +116,7 @@ sub UNIVERSAL::Sig :ATTR(CODE){
 			return $v =~ /^(\-)?\d+\.\d+$/;
 		}
 		elsif($e eq 's'){
-			return ref($v) == undef
+			return !ref($v) 
 		}
 		elsif($e =~ $PERL_REFS_REG){
 			return ref($v) eq $e;
