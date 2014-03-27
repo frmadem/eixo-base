@@ -1,6 +1,6 @@
 package Eixo::Base;
 
-use 5.014002;
+use 5.008001;
 use strict;
 use warnings;
 
@@ -25,53 +25,9 @@ our @EXPORT = qw(
 	
 );
 
-our $VERSION = '0.01';
+our $VERSION = '1.01';
 
 
 # Preloaded methods go here.
 
 1;
-__END__
-# Below is stub documentation for your module. You'd better edit it!
-
-=head1 Eixo::Base
-
-Eixo::Base - Another Perl extension for Classes and Objects
-
-=head1 SYNOPSIS
-
-  use Eixo::Base::Clase;
-  blah blah blah
-
-=head1 DESCRIPTION
-
-
-=head2 EXPORT
-
-None by default.
-
-=head1 SEE ALSO
-
-Mention other useful documentation such as the documentation of
-related modules or operating system documentation (such as man pages
-in UNIX), or any relevant external documentation such as RFCs or
-standards.
-
-If you have a mailing list set up for your module, mention it here.
-
-If you have a web site set up for your module, mention it here.
-
-=head1 AUTHOR
-
-frmadem, E<lt>frmadem@E<gt>
-
-=head1 COPYRIGHT AND LICENSE
-
-Copyright (C) 2014 by frmadem
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself, either Perl version 5.14.2 or,
-at your option, any later version of Perl 5 you may have available.
-
-
-=cut
