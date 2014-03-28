@@ -28,7 +28,6 @@ use warnings;
 
 use Test::More;
 use Data::Dumper;
-use JSON;
 
 my $aa = AA->new;
 
