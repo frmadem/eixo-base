@@ -25,16 +25,19 @@ our @EXPORT = qw(
 	
 );
 
-our $VERSION = '1.02';
+our $VERSION = '1.021';
 
 
 # Preloaded methods go here.
 
 1;
+
 __END__
-=head1 Eixo::Base
+
+=head1 NAME
 
 Eixo::Base - Another Perl extension for Classes and Objects
+
 
 =head1 SYNOPSIS
 
@@ -45,6 +48,10 @@ Eixo::Base - Another Perl extension for Classes and Objects
       size => undef,
   );
 
+  sub my_method :Log {
+  ...
+  }
+
 
 =head1 DESCRIPTION
 
@@ -53,9 +60,9 @@ Eixo::Base - Another Perl extension for Classes and Objects
 
 =head1 AUTHOR
 
-Francisco Maseda, E<lt>frmadem@gmail.com@E<gt>
+Francisco Maseda, E<lt>frmadem@gmail.comE<gt>
 
-Javier Gomez, E<lt>jgomez@gmail.com@E<gt>
+Javier Gomez, E<lt>jgomez@gmail.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
@@ -67,7 +74,7 @@ Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-L<lt>http://www.apache.org/licenses/LICENSE-2.0@L<gt>
+L<http://www.apache.org/licenses/LICENSE-2.0>
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
