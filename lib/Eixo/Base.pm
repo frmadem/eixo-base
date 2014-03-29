@@ -25,7 +25,7 @@ our @EXPORT = qw(
 	
 );
 
-our $VERSION = '1.021';
+our $VERSION = '1.022';
 
 
 # Preloaded methods go here.
@@ -62,7 +62,7 @@ Eixo::Base - Another Perl extension for Classes and Objects
 
 Francisco Maseda, E<lt>frmadem@gmail.comE<gt>
 
-Javier Gomez, E<lt>jgomez@gmail.comE<gt>
+Javier Gomez, E<lt>alambike@gmail.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
