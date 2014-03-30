@@ -4,6 +4,8 @@ MANIFEST
 Makefile.PL
 README
 README.md
+META.json
+META.yml
 lib/Eixo/Base.pm
 lib/Eixo/Base/Clase.pm
 lib/Eixo/Base/Util.pm
