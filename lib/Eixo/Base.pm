@@ -25,7 +25,7 @@ our @EXPORT = qw(
 	
 );
 
-our $VERSION = '1.022';
+our $VERSION = '1.023';
 
 
 # Preloaded methods go here.
@@ -41,14 +41,40 @@ Eixo::Base - Another Perl extension for Classes and Objects
 
 =head1 SYNOPSIS
 
+  package A;
+
   use parent qw(Eixo::Base::Clase);
 
+  # attribute setters and getters are created automatically
   has(
       id => undef,
       size => undef,
   );
 
+  # to initialize something in object instantiation
+  sub initialize {
+    my ($self,%args) = @_;
+
+    if($args{size} > 10) {
+        $self->size = 10;
+    }
+
+    # initialize flog function
+    $self->flog(sub{ 
+        print $_[0]
+    });
+
+    
+    return $self;
+  }
+
+  # Log input in this method
   sub my_method :Log {
+  ...
+  }
+
+  # check signature when calling the method
+  sub my_method :Sig(i,B){
   ...
   }
 
