@@ -12,10 +12,15 @@ our @EXPORT = qw(has);
 
 sub import{
 	no strict "refs";
+	
 	my $caller = caller;
+	
 	push @{$caller . '::ISA'}, "Eixo::Base::Clase";
+	
 	*{$caller . '::has'} = \&has;
 }
+
+
 
 sub has{
 	my (%attributes) = @_;
@@ -112,6 +117,23 @@ sub methods{
 	
 }
 
+#
+# ABSTRACT method
+#
+sub Abstract :ATTR(CODE){
+	my ($pkg, $sym, $code, $attr_name, $data) = @_;
+
+	no warnings 'redefine';
+
+	my $n = $pkg . '::' . *{$sym}{NAME};
+
+	*{$sym} = sub {
+
+		die($n . ' is ABSTRACT!!!');
+ 
+	};	
+
+}
 
 #
 # logger installing code
