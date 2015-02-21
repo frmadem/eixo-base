@@ -1,6 +1,7 @@
 package Eixo::Base::Clase;
 
 use Eixo::Base::Util;
+use Clone 'clone';
 
 use Attribute::Handlers;
 use strict;
@@ -53,10 +54,12 @@ sub has{
 
 	*{$class . '::' . '__initialize'} = sub {
 
+		my $c_attributes = clone(\%attributes);
+
 		my ($self) = @_;
 
-		foreach(keys %attributes){
-			$self->{$_} = $attributes{$_};
+		foreach(keys %$c_attributes){
+			$self->{$_} = $c_attributes->{$_};
 		}
 	};  
 }
