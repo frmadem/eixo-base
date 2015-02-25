@@ -3,6 +3,8 @@ package Eixo::Base::Util;
 use strict;
 use warnings;
 
+use Scalar::Util;
+
 use Attribute::Handlers;
 
 #
@@ -13,7 +15,8 @@ my $EQUIVALENCES = {
 	i => 'integer',
 	f => 'float',
 	s => 'string',
-	b => 'boolean'
+	b => 'boolean',
+	o => 'object',
 };
 
 #
@@ -43,7 +46,7 @@ sub UNIVERSAL::Sig :ATTR(CODE){
 			($n, $expected_value) = ($1, $2);
 		}
 
-		push @validators, [&__createValidator($n, $expected_value), $expected_value, $n];
+		push @validators, [&__createValidator($n, $expected_value, $pkg), $expected_value, $n];
 
 	}
 
@@ -75,7 +78,7 @@ sub UNIVERSAL::Sig :ATTR(CODE){
 }
 
 	sub __createValidator{
-		my ($dim, $expected_value) = @_;
+		my ($dim, $expected_value, $pkg) = @_;
 
 		sub {
 			my $args = $_[0];
@@ -91,7 +94,8 @@ sub UNIVERSAL::Sig :ATTR(CODE){
 
 			}
 			else{
-				&__v($args->[$dim], $expected_value);
+
+				&__v($args->[$dim], $expected_value, $pkg);
 			}
 		}
 
@@ -101,7 +105,7 @@ sub UNIVERSAL::Sig :ATTR(CODE){
 	my $PERL_REFS_REG = qr/^(SCALAR|ARRAY|HASH|CODE|GLOB|RegExp)$/o;
 
 	sub __v{
-		my ($v, $e) = @_;
+		my ($v, $e, $pkg) = @_;
 
 		if($e eq 'b'){
 			return !defined($v) || $v == 1
@@ -117,6 +121,14 @@ sub UNIVERSAL::Sig :ATTR(CODE){
 		}
 		elsif($e eq 's'){
 			return !ref($v) 
+		}
+		elsif($e eq 'o'){
+			return &Scalar::Util::blessed($v);
+		}
+		elsif($e eq 'self'){
+
+			&Scalar::Util::blessed($v) && $v->isa($pkg)			
+
 		}
 		elsif($e =~ $PERL_REFS_REG){
 			return ref($v) eq $e;

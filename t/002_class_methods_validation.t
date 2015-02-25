@@ -18,7 +18,7 @@ has (
 
 );
 
-sub t1 : Sig(Eixo::Base::Clase, i, ARRAY, HASH){
+sub t1 : Sig(self, i, ARRAY, HASH){
 
 }
 
