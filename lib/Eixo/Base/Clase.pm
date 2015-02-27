@@ -15,7 +15,7 @@ sub import{
 	no strict "refs";
 	
 	my $caller = caller;
-	
+
 	push @{$caller . '::ISA'}, "Eixo::Base::Clase";
 	
 	*{$caller . '::has'} = \&has;
@@ -31,25 +31,8 @@ sub has{
 	no strict 'refs';
 	
 	foreach my $attribute (keys(%attributes)){
-			
-		unless(defined(&{$class . '::' . $attribute})){
 
-			*{$class . '::' . $attribute} = sub {
-
-				my ($self, $value)  = @_;
-
-				if(defined($value)){
-					
-					$self->{$attribute} = $value;
-					
-					$self;
-				}
-				else{
-					$self->{$attribute};
-				}	
-
-			};
-		}
+		$class->__createSetterGetter($attribute, $attributes{$attribute});		
 	}
 
 	*{$class . '::' . '__initialize'} = sub {
@@ -62,6 +45,32 @@ sub has{
 			$self->{$_} = $c_attributes->{$_};
 		}
 	};  
+}
+
+sub __createSetterGetter{
+	my ($class, $attribute, $value) = @_;
+
+	no strict 'refs';
+
+	unless(defined(&{$class . '::' . $attribute})){
+
+		*{$class . '::' . $attribute} = sub {
+
+			my ($self, $value)  = @_;
+
+			if(defined($value)){
+				
+				$self->{$attribute} = $value;
+				
+				$self;
+			}
+			else{
+				$self->{$attribute};
+			}	
+
+		};
+	}
+
 }
 
 sub new{
