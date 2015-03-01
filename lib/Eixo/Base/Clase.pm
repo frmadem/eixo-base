@@ -12,13 +12,20 @@ use parent qw(Exporter);
 our @EXPORT = qw(has);
 
 sub import{
-	no strict "refs";
+	my ($class, $parent) = @_;
+
+	$parent = $parent || 'Eixo::Base::Clase';
 	
 	my $caller = caller;
 
-	push @{$caller . '::ISA'}, "Eixo::Base::Clase";
+	{
+		no strict 'refs';
+
+		push @{$caller . '::ISA'}, $parent;
 	
-	*{$caller . '::has'} = \&has;
+		*{$caller . '::has'} = \&has;
+
+	};
 }
 
 
@@ -81,7 +88,7 @@ sub new{
 	# 3 initilization forms with defined precedence
 
 	# initialize attributes with default values from 'has' hash
-	$self->__initialize;
+	$self->__initialize if($self->can('__initialize'));
 
 	# if new is called with initialization values (not recommended)
 	if(@args % 2 == 0){

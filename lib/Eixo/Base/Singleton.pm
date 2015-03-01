@@ -3,11 +3,6 @@ package Eixo::Base::Singleton;
 use strict;
 use Eixo::Base::Clase;
 
-has(
-
-	__n => 1
-);
-
 sub make_singleton{
 	my ($clase, %args) = @_;
 
