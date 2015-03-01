@@ -14,17 +14,24 @@ our @EXPORT = qw(has);
 sub import{
 	my ($class, $parent) = @_;
 
+	if(my $f = $parent){
+		
+		$f =~ s{::|'}{/}g;
+            	
+		require "$f.pm";
+	}
+
 	$parent = $parent || 'Eixo::Base::Clase';
-	
+
 	my $caller = caller;
 
 	{
+
 		no strict 'refs';
 
 		push @{$caller . '::ISA'}, $parent;
 	
 		*{$caller . '::has'} = \&has;
-
 	};
 }
 
