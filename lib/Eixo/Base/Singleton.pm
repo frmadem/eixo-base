@@ -27,9 +27,38 @@ sub make_singleton{
 			die($AUTOLOAD . ' method not found');
 		}
 
-	}		
+	};
 	
+	if($instance->can('initialize')){
+
+		$instance->initialize();
+	}
+
+	$instance;
 }
+
+sub new{
+	my ($class, @args) = @_;
+
+	my $self = bless({}, $class);
+	
+	$self->__initialize if($self->can('__initialize'));
+
+	# if new is called with initialization values (not recommended)
+	if(@args % 2 == 0){
+
+		my %args = @args;
+
+		foreach(keys(%args)){
+
+			$self->$_($args{$_}) if($self->can($_));
+
+		}
+	}
+
+	$self;
+}
+
 
 sub __createSetterGetter{
 	my ($class, $attribute, $value) = @_;

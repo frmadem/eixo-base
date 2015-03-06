@@ -6,11 +6,17 @@ use Eixo::Base::Clase 'Eixo::Base::Singleton';
 
 has(
 
-	a=>1,
+	a=>undef,
 	b=>2,
 	c=>3
 
 );
+
+sub initialize{
+
+	$_[0]->a(1);
+
+}
 
 __PACKAGE__->make_singleton();
 
