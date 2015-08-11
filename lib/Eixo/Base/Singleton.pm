@@ -43,12 +43,15 @@ sub make_singleton{
 
 sub new{
 	my ($class, @args) = @_;
-
-        my $self = $SELF || bless({}, $class);
-
         
-        $self->__initialize if($self->can('__initialize'));
+        my $self = $SELF;
 
+        unless($self){
+            $self = bless({}, $class);
+
+            $self->__initialize if($self->can('__initialize'));
+
+        }
 	# if new is called with initialization values (not recommended)
         #
         if(@args % 2 == 0){

@@ -7,7 +7,7 @@ has(
 );
 
 sub initialize{
-    print($_[0]->{path});
+    $_[0]->{path} = '/tmp/c';
 }
 
 
@@ -22,12 +22,24 @@ use t::test_base;
 use Config;
 use Data::Dumper;
 
+ok(
+    Config->path eq '/tmp/c',
+    "Por defecto vai seteado no obxeto o valor do atributo establecido no metodo initialize"
+);
+
 my $c = Config->new(path =>'/tmp/b');
 
 ok( 
     $c->path eq '/tmp/b',
 
-    "Podemos inicializar o singleton"
+    "Podemos inicializar o obxeto singleton facendo un new"
+);
+
+my $d = Config->new(path => '/tmp/d');
+ok(
+    ref($d) eq ref($c),
+
+    "E con seguintes chamadas a new podemos seguimos alterando os atributos, pero siguen sendo o mesmo objexto"
 );
 
 done_testing();
