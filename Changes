@@ -1,13 +1,13 @@
 Revision history for Perl extension Eixo::Base.
 
+1.101   Aug 11 2015
+    - Changed sytem of inheritance in Clase.pm
+    - Singleton class added
+    - Added new types to Sig validation   
+
 1.025   Feb 17 2015
     - Added Abstract attribute
 
 1.02    Mar 28 2014    
     - Add documentation   
-
-
-0.01  Tue Mar 25 13:03:19 2014
-	- original version; created by h2xs 1.23 with options
-		-AX Eixo::Base
 
