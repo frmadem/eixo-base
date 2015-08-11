@@ -1,5 +1,8 @@
 Revision history for Perl extension Eixo::Base.
 
+1.102   Aug 11 2015
+    - Correct initialization of Eixo::Base::Singleton objects
+
 1.101   Aug 11 2015
     - Changed sytem of inheritance in Clase.pm
     - Singleton class added
