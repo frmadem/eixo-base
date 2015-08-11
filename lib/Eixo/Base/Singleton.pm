@@ -3,10 +3,14 @@ package Eixo::Base::Singleton;
 use strict;
 use Eixo::Base::Clase;
 
+my $SELF;
+
 sub make_singleton{
 	my ($clase, %args) = @_;
 
 	no strict 'refs';
+
+        no warnings 'redefine';
 
 	return if(defined(&{$clase . '::SINGLETON'}));
 
@@ -40,23 +44,28 @@ sub make_singleton{
 sub new{
 	my ($class, @args) = @_;
 
-	my $self = bless({}, $class);
-	
-	$self->__initialize if($self->can('__initialize'));
+        my $self = $SELF || bless({}, $class);
+
+        
+        $self->__initialize if($self->can('__initialize'));
 
 	# if new is called with initialization values (not recommended)
-	if(@args % 2 == 0){
+        #
+        if(@args % 2 == 0){
 
 		my %args = @args;
 
-		foreach(keys(%args)){
+		foreach my $k (keys(%args)){
 
-			$self->$_($args{$_}) if($self->can($_));
+                    my $method = '__'.$k;
+
+                    $self->$method($args{$k}) if($self->can($method));
+                    #$self->{$k} = $args{$k} ;
 
 		}
 	}
-
-	$self;
+        
+        $SELF = $self;
 }
 
 
