@@ -3,8 +3,6 @@ package Eixo::Base::Singleton;
 use strict;
 use Eixo::Base::Clase;
 
-my $SELF;
-
 sub make_singleton{
 	my ($clase, %args) = @_;
 
@@ -16,7 +14,11 @@ sub make_singleton{
 
 	my $instance = $clase->new(%args);
 
-	*{$clase . '::SINGLETON'} = sub {};
+	*{$clase . '::SINGLETON'} = sub {
+	
+		return $instance;
+
+	};
 
 	*{$clase . '::AUTOLOAD'} = sub {
 
@@ -44,7 +46,7 @@ sub make_singleton{
 sub new{
 	my ($class, @args) = @_;
         
-        my $self = $SELF;
+        my $self = ($class->can('SINGLETON')) ? $class->SINGLETON : undef;
 
         unless($self){
             $self = bless({}, $class);
@@ -68,7 +70,7 @@ sub new{
 		}
 	}
         
-        $SELF = $self;
+        $self;
 }
 
 
