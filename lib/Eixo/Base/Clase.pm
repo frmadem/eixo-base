@@ -93,7 +93,7 @@ sub new{
 	my $self = bless({}, $clase);
 
 
-	# initialize attributes with default values from 'has' hash
+	# initialize attributes with default values from 'has' 
 	$self->__initialize if($self->can('__initialize'));
     
     # finally call initialize method
