@@ -92,11 +92,24 @@ sub new{
 
 	my $self = bless({}, $clase);
 
-	# 3 initilization forms with defined precedence
 
-	# initialize attributes with default values from 'has' hash
+	# initialize attributes with default values from 'has' 
 	$self->__initialize if($self->can('__initialize'));
+    
+    # finally call initialize method
+    $self->initialize(@args);
 
+	$self;
+}
+
+#
+# default initialize 
+#
+sub initialize{
+    
+    my ($self, @args) = @_;
+
+    # default initialize
 	# if new is called with initialization values (not recommended)
 	if(@args % 2 == 0){
 
@@ -108,11 +121,6 @@ sub new{
 
 		}
 	}
-
-	# if class has initialize method (recommended)
-	$self->initialize(@args) if($self->can('initialize'));
-
-	$self;
 }
 
 #
