@@ -8,11 +8,13 @@ has(
 
 	a=>undef,
 	b=>2,
-	c=>3
+	c=>3,
 
 );
 
 sub initialize{
+
+	#$_[0]->SUPER::initialize(@_[1..$#_]);
 
 	$_[0]->a(1);
 

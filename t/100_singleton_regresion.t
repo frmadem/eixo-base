@@ -7,11 +7,14 @@ has(
 );
 
 sub initialize{
-    $_[0]->{path} = '/tmp/c';
+
+    my ($self, %args) = @_;
+
+    $self->{path} = $args{'path'} || '/tmp/c';
 }
 
 
-__PACKAGE__->make_singleton();
+__PACKAGE__->make_singleton(path=>"/tmp/c");
 
 1;
 
