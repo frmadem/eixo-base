@@ -7,6 +7,8 @@ use Attribute::Handlers;
 use strict;
 use warnings;
 
+use Eixo::Base::MyRequire;
+
 use parent qw(Exporter);
 
 our @EXPORT = qw(has);
@@ -24,7 +26,8 @@ sub import{
 
 			no strict 'refs';
 
-			eval '@{$f . "::ISA"}' || require "$f.pm";
+			#eval '@{$f . "::ISA"}' || require "$f.pm";
+			my_require($f);
 		}
 	}
 
