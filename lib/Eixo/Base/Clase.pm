@@ -7,8 +7,6 @@ use Attribute::Handlers;
 use strict;
 use warnings;
 
-use Eixo::Base::MyRequire;
-
 
 sub import{
 	my $class = shift;
