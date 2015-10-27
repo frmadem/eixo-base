@@ -118,11 +118,12 @@ sub new{
 	# initialize attributes with default values from 'has' 
 	$self->__chainInitialize;    
 
-    	# finally call initialize method
-    	$self->initialize(@args);
+    # finally call initialize method
+    $self->initialize(@args);
 
 	$self;
 }
+
 
 sub __chainInitialize{
 	my ($self) = @_;

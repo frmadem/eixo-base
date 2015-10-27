@@ -45,18 +45,18 @@ sub make_singleton{
 
 sub new{
 	my ($class, @args) = @_;
-        
-        my $self = ($class->can('SINGLETON')) ? $class->SINGLETON : undef;
-
-        if($self){
+   
+    my $self = ($class->can('SINGLETON')) ? $class->SINGLETON : undef;
+    
+    if($self){
 		$self->initialize(@args);
 	}
 	else{
-            $self = bless({}, $class);
+        $self = bless({}, $class);
+        
+        $self->__initialize if($self->can('__initialize'));
 
-            $self->__initialize if($self->can('__initialize'));
-
-        }
+    }
 
 
 	$self;
