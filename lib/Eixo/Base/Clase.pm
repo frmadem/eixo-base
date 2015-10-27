@@ -9,12 +9,13 @@ use warnings;
 
 use Eixo::Base::MyRequire;
 
-use parent qw(Exporter);
-
-our @EXPORT = qw(has);
 
 sub import{
 	my $class = shift;
+
+	$_->import for qw(strict warnings utf8);
+
+	return unless($class eq 'Eixo::Base::Clase');
 
 	if(@_ && $_[0] eq '-norequire'){
 		shift @_;
@@ -22,35 +23,39 @@ sub import{
 	else{
 		foreach my $f (my @copy = @_){
 
-			$f =~ s{::|'}{/}g;
+			$f =~ s!::|'!/!g;
 
 			no strict 'refs';
 
-			#eval '@{$f . "::ISA"}' || require "$f.pm";
-			my_require($f);
+			require "$f.pm";
+
 		}
 	}
+
+	my @inheritance = (@_ > 0) ? @_ : $class;
 
 	my $caller = caller;
 
 	{
         	no strict 'refs';
 
-		no warnings;
+		foreach my $my_class (@inheritance){
 
-		foreach my $my_class (@_, $class){
 
-        		push @{"$caller\:\:ISA"}, $my_class unless(
+			next if($caller->isa($my_class));
 
-				$caller->isa($my_class) 
+			#print "------>$caller $my_class \n";
 
-			);
+        		push @{"${caller}\:\:ISA"}, $my_class;
+
 
 		}
 
 
 		*{$caller . '::has'} = \&has;
+
     	};
+
 
 }
 
