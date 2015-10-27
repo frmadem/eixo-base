@@ -2,6 +2,7 @@ Changes
 lib/Eixo/Base.pm
 lib/Eixo/Base/Clase.pm
 lib/Eixo/Base/Data.pm
+lib/Eixo/Base/MyRequire.pm
 lib/Eixo/Base/Singleton.pm
 lib/Eixo/Base/Util.pm
 LICENSE
@@ -16,6 +17,7 @@ t/002_class_methods_validation.t
 t/003_sub_validation.t
 t/004_class_abstract.t
 t/004_class_singleton.t
+t/005_class_multiple.t
 t/020_data.t
 t/100_singleton_regresion.t
 t/Eixo-Base.t

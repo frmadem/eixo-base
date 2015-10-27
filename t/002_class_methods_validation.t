@@ -35,7 +35,7 @@ $@ = undef;
 eval{
 	$aa->t1(1,[]);
 };
-
-print $@;
+ok($@, "Error detected");
+#print $@;
 
 done_testing();

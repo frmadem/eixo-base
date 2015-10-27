@@ -7,32 +7,54 @@ use Attribute::Handlers;
 use strict;
 use warnings;
 
-use parent qw(Exporter);
-
-our @EXPORT = qw(has);
 
 sub import{
-	my ($class, $parent) = @_;
+	my $class = shift;
 
-	if(my $f = $parent){
-		
-		$f =~ s{::|'}{/}g;
-            	
-		require "$f.pm";
+	$_->import for qw(strict warnings utf8);
+
+	return unless($class eq 'Eixo::Base::Clase');
+
+	if(@_ && $_[0] eq '-norequire'){
+		shift @_;
+	}
+	else{
+		foreach my $f (my @copy = @_){
+
+			$f =~ s!::|'!/!g;
+
+			no strict 'refs';
+
+			require "$f.pm";
+
+		}
 	}
 
-	$parent = $parent || 'Eixo::Base::Clase';
+	my @inheritance = (@_ > 0) ? @_ : $class;
 
 	my $caller = caller;
 
 	{
+        	no strict 'refs';
 
-		no strict 'refs';
+		foreach my $my_class (@inheritance){
 
-		push @{$caller . '::ISA'}, $parent;
-	
+
+			next if($caller->isa($my_class));
+
+			#print "------>$caller $my_class \n";
+
+        		push @{"${caller}\:\:ISA"}, $my_class;
+
+
+		}
+
+
 		*{$caller . '::has'} = \&has;
-	};
+
+    	};
+
+
 }
 
 
@@ -56,6 +78,7 @@ sub has{
 		my ($self) = @_;
 
 		foreach(keys %$c_attributes){
+
 			$self->{$_} = $c_attributes->{$_};
 		}
 	};  
@@ -92,14 +115,29 @@ sub new{
 
 	my $self = bless({}, $clase);
 
-
 	# initialize attributes with default values from 'has' 
-	$self->__initialize if($self->can('__initialize'));
-    
-    # finally call initialize method
-    $self->initialize(@args);
+	$self->__chainInitialize;    
+
+    	# finally call initialize method
+    	$self->initialize(@args);
 
 	$self;
+}
+
+sub __chainInitialize{
+	my ($self) = @_;
+
+	no strict 'refs';	
+
+	foreach(@{ref($self) . '::ISA'}){
+
+		if(my $code = $_->can('__initialize')){
+
+			$code->(@_);
+		}
+	}
+
+	$self->__initialize if($self->can('__initialize'));
 }
 
 #
@@ -109,7 +147,9 @@ sub initialize{
     
     my ($self, @args) = @_;
 
-    # default initialize
+    	# default initialize
+	
+
 	# if new is called with initialization values (not recommended)
 	if(@args % 2 == 0){
 

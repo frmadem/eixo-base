@@ -48,30 +48,21 @@ sub new{
         
         my $self = ($class->can('SINGLETON')) ? $class->SINGLETON : undef;
 
-        unless($self){
+        if($self){
+		$self->initialize(@args);
+	}
+	else{
             $self = bless({}, $class);
 
             $self->__initialize if($self->can('__initialize'));
 
         }
-	# if new is called with initialization values (not recommended)
-        #
-        if(@args % 2 == 0){
 
-		my %args = @args;
 
-		foreach my $k (keys(%args)){
+	$self;
 
-                    my $method = '__'.$k;
-
-                    $self->$method($args{$k}) if($self->can($method));
-                    #$self->{$k} = $args{$k} ;
-
-		}
-	}
-        
-        $self;
 }
+
 
 
 sub __createSetterGetter{

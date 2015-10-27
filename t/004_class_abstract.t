@@ -7,7 +7,7 @@ eval{
 	A->m;
 };
 
-ok($@ && $@ =~ /A\:\:m is ABSTRACT/, 'Abstract controls works ' . $@);
+ok($@ && $@ =~ /A\:\:m is ABSTRACT/, 'Abstract controls works ');
 
 done_testing();
 
