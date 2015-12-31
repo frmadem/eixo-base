@@ -59,35 +59,41 @@ Foo2->make_singleton;
 ok(Foo2->b == 22, "make_singleton is idempotent");
 
 
-if(my $pid = fork){
+#
+# fork e signals don't work in windows
+#
+use Config;
 
-	my $ok_value = 0;
-
-	$SIG{USR1} = sub {
-
-		$ok_value = 1;
-	};
-
-	waitpid($pid, 0);
-
-	ok($ok_value, "Forks respect singleton values");
-
+unless($Config{'osname'} eq 'MSWin32'){
+    if(my $pid = fork){
+    
+    	my $ok_value = 0;
+    
+    	$SIG{USR1} = sub {
+    
+    		$ok_value = 1;
+    	};
+    
+    	waitpid($pid, 0);
+    
+    	ok($ok_value, "Forks respect singleton values");
+    
+    }
+    else{
+    	eval{
+    
+    		Foo2->make_singleton;
+    
+    		if(Foo2->b == 22){
+    
+    			kill("USR1", getppid());
+    
+    		}
+    	};
+    
+    	exit 0;
+    }
 }
-else{
-	eval{
-
-		Foo2->make_singleton;
-
-		if(Foo2->b == 22){
-
-			kill("USR1", getppid());
-
-		}
-	};
-
-	exit 0;
-}
-
 
 
 done_testing();
