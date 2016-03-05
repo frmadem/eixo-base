@@ -42,15 +42,15 @@ sub _flag{
         return unless(defined($$data));
 
         ($enable)? 
-            utf8::decode($$data) : 
-            utf8::encode($$data)
+            utf8::upgrade($$data) : 
+            utf8::downgrade($$data)
     }
     elsif(!ref($data)){
         return unless(defined($data));
 
         ($enable)? 
-            utf8::decode($data) : 
-            utf8::encode($data)
+            utf8::upgrade($data) : 
+            utf8::downgrade($data)
     }
     else{
         # no hace nada en otro tipo de refs
