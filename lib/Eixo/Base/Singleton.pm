@@ -4,92 +4,96 @@ use strict;
 use Eixo::Base::Clase;
 
 sub make_singleton{
-	my ($clase, %args) = @_;
+    my ($clase, %args) = @_;
 
-	no strict 'refs';
+    no strict 'refs';
 
         no warnings 'redefine';
 
-	return if(defined(&{$clase . '::SINGLETON'}));
+    return if(defined(&{$clase . '::SINGLETON'}));
 
-	my $instance = $clase->new(%args);
+    my $instance = $clase->new(%args);
 
-	*{$clase . '::SINGLETON'} = sub {
-	
-		return $instance;
+    *{$clase . '::SINGLETON'} = sub {
+    
+        return $instance;
 
-	};
+    };
 
-	*{$clase . '::AUTOLOAD'} = sub {
+    *{$clase . '::AUTOLOAD'} = sub {
 
-		my ($attribute) = our $AUTOLOAD =~ /\:(\w+)$/; 
+        my ($attribute) = our $AUTOLOAD =~ /\:(\w+)$/; 
 
-		if(my $method = $instance->can('__' . $attribute)){
-			
-			$instance->$method(@_[1..$#_]);				
-	
-		}
-		else{
-			die($AUTOLOAD . ' method not found');
-		}
+        if(my $method = $instance->can('__' . $attribute)){
+            
+            $instance->$method(@_[1..$#_]);                
+    
+        }
+        else{
+            die($AUTOLOAD . ' method not found');
+        }
 
-	};
-	
-	if($instance->can('initialize')){
+    };
+    
+    if($instance->can('initialize')){
 
-		$instance->initialize();
-	}
+        $instance->initialize();
+    }
 
-	$instance;
+    $instance;
 }
 
 sub new{
-	my ($class, @args) = @_;
+    my ($class, @args) = @_;
    
     my $self = ($class->can('SINGLETON')) ? $class->SINGLETON : undef;
     
     if($self){
-		$self->initialize(@args);
-	}
-	else{
+        $self->__chainInitialize;
+
+        $self->initialize(@args);
+    }
+    else{
         $self = bless({}, $class);
+
+        $self->__chainInitialize;
         
         $self->__initialize if($self->can('__initialize'));
 
     }
 
 
-	$self;
+    $self;
 
 }
 
 
 
 sub __createSetterGetter{
-	my ($class, $attribute, $value) = @_;
+    my ($class, $attribute, $value) = @_;
 
-	no strict 'refs';
+    no strict 'refs';
 
-	unless(defined(&{$class . '::__' . $attribute})){
+    unless(defined(&{$class . '::__' . $attribute})){
 
-		*{$class . '::__' . $attribute} = sub {
+        *{$class . '::__' . $attribute} = sub {
 
-			my ($self, $value)  = @_;
+            my ($self, $value)  = @_;
 
-			if(defined($value)){
-				
-				$self->{$attribute} = $value;
-				
-				$self;
-			}
-			else{
-	
-				$self->{$attribute};
-			}	
+            if(defined($value)){
+                
+                $self->{$attribute} = $value;
+                
+                $self;
+            }
+            else{
+    
+                $self->{$attribute};
+            }    
 
-		};
+        };
 
-	}
+    }
 }
 
 

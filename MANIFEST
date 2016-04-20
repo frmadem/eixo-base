@@ -16,6 +16,7 @@ t/003_sub_validation.t
 t/004_class_abstract.t
 t/004_class_singleton.t
 t/005_class_multiple.t
+t/010_singleton_heritage.t
 t/020_data.t
 t/030_utf8.t
 t/100_singleton_regresion.t
