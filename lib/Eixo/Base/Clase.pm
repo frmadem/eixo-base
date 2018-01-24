@@ -2,6 +2,7 @@ package Eixo::Base::Clase;
 
 use Eixo::Base::Util;
 use Clone 'clone';
+use mro;
 
 use Attribute::Handlers;
 use strict;
@@ -38,14 +39,17 @@ sub import{
     {
         no strict 'refs';
 
-        foreach my $my_class (@inheritance){
+        foreach my $parent (@inheritance){
 
+            foreach my $my_class (@{mro::get_linear_isa($parent)}){
+                #print "$my_class\n";
+                
+                #next if($caller->isa($my_class));
 
-            next if($caller->isa($my_class));
+                #print "------>$caller $my_class \n";
 
-            #print "------>$caller $my_class \n";
-
-            push @{"${caller}\:\:ISA"}, $my_class;
+                push @{"${caller}\:\:ISA"}, $my_class;
+            }
 
 
         }
