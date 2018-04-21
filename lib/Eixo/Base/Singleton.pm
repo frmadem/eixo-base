@@ -1,6 +1,7 @@
 package Eixo::Base::Singleton;
 
 use strict;
+use Carp;
 use Eixo::Base::Clase;
 
 sub make_singleton{
@@ -30,7 +31,7 @@ sub make_singleton{
     
         }
         else{
-            die($AUTOLOAD . ' method not found');
+            croak($AUTOLOAD . ' method not found');
         }
 
     };

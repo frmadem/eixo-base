@@ -2,7 +2,7 @@ package Eixo::Base::Util;
 
 use strict;
 use warnings;
-
+use Carp;
 use Scalar::Util;
 
 use Attribute::Handlers;
@@ -58,7 +58,7 @@ sub UNIVERSAL::Sig :ATTR(CODE){
 
 				my $expected_value = $EQUIVALENCES->{$validator->[1]} || $validator->[1];
 
-				die(*{$sym}{NAME} . ': expected value \'' . $expected_value . '\' in arg (' . $validator->[2] . ')');
+				croak(*{$sym}{NAME} . ': expected value \'' . $expected_value . '\' in arg (' . $validator->[2] . ')');
 
 			}
 		}
